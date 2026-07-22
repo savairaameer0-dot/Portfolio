@@ -8,12 +8,11 @@ const devlog = [
     title: "Started the build-in-public portfolio",
     detail: "Got the basic structure up — terminal-style hero, devlog section, nothing fancy yet. Next up: real skills list and an actual project instead of placeholder text."
   }
-  // newest entries go above this line
-  // { day: "Day 2", title: "...", detail: "..." },
+
 ];
 
 const stack = ["HTML", "CSS", "JavaScript"];
-// add stuff here as you actually learn/use it — React, Node, whatever's next
+
 
 const projects = [
   {
@@ -24,7 +23,7 @@ const projects = [
 ];
 
 const links = {
-  github: "https://github.com/savairaameer0",
+  github: "https://github.com/savairaameer0-dot",
   email: "mailto:savairaameer0@gmail.com"
 };
 
