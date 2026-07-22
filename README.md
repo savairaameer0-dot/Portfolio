@@ -1,17 +1,17 @@
-# Build-in-Public Portfolio
+# My Build-in-Public Portfolio
 
-Personal site I'm building and updating regularly to practice web dev and share progress on GitHub.
+A personal portfolio site I'm building and updating every day to practice web development and share progress on GitHub and LinkedIn.
 
-## Files
+## What's here
 - `index.html` — page structure
 - `style.css` — styling
-- `script.js` — the actual content (devlog, stack, projects, links). This is the one I edit most.
+- `script.js` — content (devlog entries, skills, projects, links). **This is the file I edit daily.**
 
-## Routine
+## Daily routine
 1. Open `script.js`
-2. Add a new entry to the top of `devlog` describing what I actually did that day
-3. New tool/skill? Add it to `stack`
-4. Finished something? Add it to `projects`
+2. Add one new entry to the top of the `devlog` array describing what I did today
+3. If I learned/used something new, add it to `stack`
+4. If I finished a project, add it to `projects`
 5. Commit and push:
    ```
    git add .
@@ -20,9 +20,9 @@ Personal site I'm building and updating regularly to practice web dev and share 
    ```
 
 ## Roadmap
-- [x] Day 1: static site (HTML/CSS/JS)
-- [ ] Add a real first project
+- [x] Day 1: Static site (HTML/CSS/JS)
+- [x] Day 2: First real project — portfolio assistant chatbox
 - [ ] Add a contact form
-- [ ] Small backend (Node/Express)
-- [ ] Hook up a database
+- [ ] Add a small backend (Node.js/Express)
+- [ ] Connect a database
 - [ ] Deploy (GitHub Pages / Vercel / Render)
