@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Savaira Ameer — Building in Public</title>
+<title>Savie — Building in Public</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
@@ -11,7 +11,7 @@
 <body>
 
   <nav class="nav">
-    <div class="nav-brand">Savaira Ameer<span class="cursor">_</span></div>
+    <div class="nav-brand">savie<span class="cursor">_</span></div>
     <div class="nav-links">
       <a href="#log">devlog</a>
       <a href="#stack">stack</a>
@@ -28,7 +28,7 @@
       </div>
       <div class="terminal-body">
         <p><span class="prompt">$</span> whoami</p>
-        <p class="output">Savaira Ameer — full-stack developer, learning in public.</p>
+        <p class="output">Savie — full-stack developer, learning in public.</p>
         <p><span class="prompt">$</span> status</p>
         <p class="output">Shipping something new every day. <span class="blink">▍</span></p>
       </div>
@@ -41,7 +41,7 @@
     <h2 class="section-label"><span>01</span> devlog</h2>
     <p class="section-intro">Every entry below is a real day of work. No skipped days, no fake streaks.</p>
     <div class="log-list" id="log-list">
-      <!-- filled in from script.js -->
+      <!-- entries injected by script.js -->
     </div>
   </section>
 
@@ -61,9 +61,28 @@
 
   <section id="contact" class="contact-section">
     <h2 class="section-label"><span>04</span> contact</h2>
-    <p class="contact-text">Open to opportunities. Reach out or check the code.</p>
+    <p class="contact-text">Open to opportunities. Send a message directly, or reach out via GitHub/email below.</p>
+
+    <form class="contact-form" id="contact-form" action="https://formspree.io/f/mgognwaz" method="POST">
+      <div class="form-row">
+        <label for="cf-name">Name</label>
+        <input type="text" id="cf-name" name="name" required />
+      </div>
+      <div class="form-row">
+        <label for="cf-email">Email</label>
+        <input type="email" id="cf-email" name="email" required />
+      </div>
+      <div class="form-row">
+        <label for="cf-message">Message</label>
+        <textarea id="cf-message" name="message" rows="4" required></textarea>
+      </div>
+      <button type="submit" class="form-submit">Send message</button>
+      <p class="form-status" id="form-status" hidden></p>
+    </form>
+
     <div class="contact-links">
       <a href="#" id="link-github">GitHub</a>
+      <a href="#" id="link-linkedin">LinkedIn</a>
       <a href="#" id="link-email">Email</a>
     </div>
   </section>
@@ -72,7 +91,7 @@
     <p>Built line by line, day by day. <span id="days-counter"></span></p>
   </footer>
 
-  <!-- little chat widget in the corner, answers questions using the data above -->
+  <!-- AI-style Assistant Widget -->
   <div class="chat-widget">
     <button class="chat-toggle" id="chat-toggle" aria-label="Open assistant chat">
       <span class="chat-toggle-icon">💬</span>

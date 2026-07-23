@@ -251,7 +251,69 @@ section {
 
 /* Contact */
 .contact-text { color: var(--muted); margin-bottom: 20px; max-width: 500px; }
-.contact-links { display: flex; gap: 24px; font-family: var(--font-mono); }
+.contact-links { display: flex; gap: 24px; font-family: var(--font-mono); margin-top: 28px; }
+
+.contact-form {
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-row label {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.form-row input,
+.form-row textarea {
+  background: var(--ink-light);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 10px 12px;
+  color: var(--paper);
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  resize: vertical;
+}
+
+.form-row input:focus,
+.form-row textarea:focus {
+  outline: 1px solid var(--amber);
+  border-color: var(--amber);
+}
+
+.form-submit {
+  align-self: flex-start;
+  background: var(--amber);
+  color: var(--ink);
+  border: none;
+  border-radius: 6px;
+  padding: 10px 22px;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+
+.form-submit:hover { transform: translateY(-1px); }
+.form-submit:disabled { opacity: 0.6; cursor: default; transform: none; }
+
+.form-status {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+}
+
+.form-status.success { color: var(--teal); }
+.form-status.error { color: #E8637D; }
 
 .footer {
   text-align: center;
@@ -270,7 +332,7 @@ section {
   .cursor, .blink { animation: none; }
 }
 
-/* chat widget in the corner */
+/* Chat Widget */
 .chat-widget {
   position: fixed;
   bottom: 24px;

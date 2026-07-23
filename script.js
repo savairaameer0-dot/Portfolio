@@ -1,7 +1,15 @@
-// script.js — the file I actually touch every day.
-// New devlog entry goes on top, then commit + push.
+// =========================================================
+// EDIT THIS FILE EVERY DAY. Add one new entry to `devlog`
+// at the TOP of the array, commit, and push. That's it —
+// that's your daily contribution.
+// =========================================================
 
 const devlog = [
+  {
+    day: "Day 3",
+    title: "Added a working contact form",
+    detail: "Wired up the contact form using Formspree so visitors can message me directly, with real success/error feedback instead of a page reload."
+  },
   {
     day: "Day 2",
     title: "Built a portfolio assistant chatbox",
@@ -10,47 +18,53 @@ const devlog = [
   {
     day: "Day 1",
     title: "Started the build-in-public portfolio",
-    detail: "Got the basic structure up — terminal-style hero, devlog section, nothing fancy yet. Next up: real skills list and an actual project instead of placeholder text."
+    detail: "Set up the site structure, terminal-style hero, and devlog section. Tomorrow: fill in real skills and first project."
   }
-  // newest entries go above this line
+  // Add new entries above this line, newest first, e.g.:
   // { day: "Day 3", title: "...", detail: "..." },
 ];
 
-const stack = ["HTML", "CSS", "JavaScript"];
-// add stuff here as you actually learn/use it — React, Node, whatever's next
+const stack = [
+  "HTML", "CSS", "JavaScript",
+  // add more as you learn them, e.g. "React", "Node.js", "Express", "MongoDB", "Git"
+];
 
 const projects = [
   {
     name: "Portfolio Assistant (chatbox)",
-    description: "A rule-based chat widget in the bottom-right corner that answers questions about my skills, projects, and how to reach me.",
+    description: "A rule-based chat widget (bottom-right corner) that answers questions about my skills, projects, and how to reach me.",
     tags: ["JavaScript", "DOM"]
   },
   {
     name: "This portfolio",
-    description: "The site you're on right now. Built and updated as I go.",
+    description: "The site you're looking at right now — built and updated daily.",
     tags: ["HTML", "CSS", "JS"]
   }
+  // add real projects here as you build them:
+  // { name: "Project Name", description: "What it does.", tags: ["Tech1", "Tech2"] }
 ];
 
 const links = {
-  github: "https://github.com/savairaameer0-dot",
-  email: "mailto:savairaameer0@gmail.com"
+  github: "https://github.com/YOUR-USERNAME",
+  linkedin: "https://linkedin.com/in/YOUR-USERNAME",
+  email: "mailto:you@example.com"
 };
+
+// =========================================================
+// Rendering logic below — no need to touch this part
+// =========================================================
 
 function renderLog() {
   const list = document.getElementById("log-list");
-  let html = "";
-  for (const entry of devlog) {
-    html += `
-      <div class="log-entry">
-        <div class="log-day">${entry.day}</div>
-        <div class="log-content">
-          <h3>${entry.title}</h3>
-          <p>${entry.detail}</p>
-        </div>
-      </div>`;
-  }
-  list.innerHTML = html;
+  list.innerHTML = devlog.map(entry => `
+    <div class="log-entry">
+      <div class="log-day">${entry.day}</div>
+      <div class="log-content">
+        <h3>${entry.title}</h3>
+        <p>${entry.detail}</p>
+      </div>
+    </div>
+  `).join("");
 }
 
 function renderStack() {
@@ -60,27 +74,23 @@ function renderStack() {
 
 function renderProjects() {
   const grid = document.getElementById("projects-grid");
-  grid.innerHTML = projects.map(p => {
-    const tags = p.tags.map(t => `<span class="tag">${t}</span>`).join("");
-    return `
-      <div class="project-card">
-        <h3>${p.name}</h3>
-        <p>${p.description}</p>
-        ${tags}
-      </div>`;
-  }).join("");
+  grid.innerHTML = projects.map(p => `
+    <div class="project-card">
+      <h3>${p.name}</h3>
+      <p>${p.description}</p>
+      ${p.tags.map(t => `<span class="tag">${t}</span>`).join("")}
+    </div>
+  `).join("");
 }
 
 function renderLinks() {
   document.getElementById("link-github").href = links.github;
+  document.getElementById("link-linkedin").href = links.linkedin;
   document.getElementById("link-email").href = links.email;
 }
 
 function renderDaysCounter() {
-  const el = document.getElementById("days-counter");
-  el.textContent = devlog.length === 1
-    ? "1 day logged so far."
-    : `${devlog.length} days logged so far.`;
+  document.getElementById("days-counter").textContent = `${devlog.length} day(s) logged so far.`;
 }
 
 renderLog();
@@ -89,10 +99,14 @@ renderProjects();
 renderLinks();
 renderDaysCounter();
 
-// Portfolio assistant — rule-based chat widget.
-// Pulls answers from the data above (stack, projects, devlog, links)
-// so it stays in sync as I add more. Runs fully in the browser,
-// no API key or backend needed yet.
+// =========================================================
+// Portfolio Assistant — a rule-based "AI-style" chat widget.
+// It answers using the data already defined above (stack,
+// projects, devlog, links) so it stays in sync automatically
+// as you add more entries. No API key needed, runs fully
+// in the browser. Swap in a real LLM API later once you
+// add a backend.
+// =========================================================
 
 const chatToggle = document.getElementById("chat-toggle");
 const chatPanel = document.getElementById("chat-panel");
@@ -139,10 +153,10 @@ function getBotReply(userText) {
     return `I've built: ${names}. Check the Projects section above for details.`;
   }
   if (text.includes("contact") || text.includes("email") || text.includes("reach")) {
-    return "You can reach out via the Contact section above — GitHub and email are both there.";
+    return "You can reach out via the Contact section above — links to GitHub, LinkedIn, and email are all there.";
   }
   if (text.includes("hire") || text.includes("job") || text.includes("opportun")) {
-    return "I'm actively open to opportunities! Best way in is through the Contact section — GitHub or email.";
+    return "I'm actively open to opportunities! Best way in is through the Contact section — GitHub, LinkedIn, or email.";
   }
   if (text.includes("devlog") || text.includes("progress") || text.includes("day")) {
     return `I'm on ${devlog.length} day(s) of building in public so far — check the Devlog section for the full log.`;
@@ -181,3 +195,46 @@ chatForm.addEventListener("submit", (e) => {
   chatInput.value = "";
   handleUserMessage(text);
 });
+
+// =========================================================
+// Contact form — sends via Formspree (no backend needed).
+// Replace the form's `action` URL in index.html with your
+// own Formspree endpoint: https://formspree.io/f/YOUR_FORM_ID
+// =========================================================
+
+const contactForm = document.getElementById("contact-form");
+const formStatus = document.getElementById("form-status");
+
+if (contactForm) {
+  contactForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const submitBtn = contactForm.querySelector(".form-submit");
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Sending...";
+    formStatus.hidden = true;
+
+    try {
+      const response = await fetch(contactForm.action, {
+        method: "POST",
+        body: new FormData(contactForm),
+        headers: { "Accept": "application/json" }
+      });
+
+      if (response.ok) {
+        formStatus.textContent = "Message sent — thanks for reaching out!";
+        formStatus.className = "form-status success";
+        contactForm.reset();
+      } else {
+        formStatus.textContent = "Something went wrong. Please try again.";
+        formStatus.className = "form-status error";
+      }
+    } catch (err) {
+      formStatus.textContent = "Network error. Please try again.";
+      formStatus.className = "form-status error";
+    } finally {
+      formStatus.hidden = false;
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Send message";
+    }
+  });
+}

@@ -3,11 +3,13 @@
 A personal portfolio site I'm building and updating every day to practice web development and share progress on GitHub and LinkedIn.
 
 ## What's here
+
 - `index.html` — page structure
 - `style.css` — styling
 - `script.js` — content (devlog entries, skills, projects, links). **This is the file I edit daily.**
 
 ## Daily routine
+
 1. Open `script.js`
 2. Add one new entry to the top of the `devlog` array describing what I did today
 3. If I learned/used something new, add it to `stack`
@@ -20,9 +22,9 @@ A personal portfolio site I'm building and updating every day to practice web de
    ```
 
 ## Roadmap
+
 - [x] Day 1: Static site (HTML/CSS/JS)
 - [x] Day 2: First real project — portfolio assistant chatbox
-- [ ] Add a contact form
+- [x] Day 3: Working contact form (Formspree)
 - [ ] Add a small backend (Node.js/Express)
 - [ ] Connect a database
-- [ ] Deploy (GitHub Pages / Vercel / Render)
