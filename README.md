@@ -1,7 +1,6 @@
 # My Build-in-Public Portfolio
 
-A personal portfolio site I'm building and updating every day to practice web development and share progress on GitHub and LinkedIn.
-
+A personal portfolio site I'm building and updating every day to practice web development and share progress on GitHub 
 ## What's here
 - `index.html` — page structure
 - `style.css` — styling
