@@ -1,6 +1,7 @@
 # My Build-in-Public Portfolio
 
-A personal portfolio site I'm building and updating every day to practice web development and share progress on GitHub 
+A personal portfolio site I'm building and updating every day to practice web development and share progress on GitHub.
+
 ## What's here
 - `index.html` — page structure
 - `style.css` — styling
@@ -22,6 +23,5 @@ A personal portfolio site I'm building and updating every day to practice web de
 - [x] Day 1: Static site (HTML/CSS/JS)
 - [x] Day 2: First real project — portfolio assistant chatbox
 - [x] Day 3: Working contact form (Formspree)
-- [ ] Add a small backend (Node.js/Express)
+- [x] Day 4: Small backend (Node.js/Express) — see [portfolio-backend](https://github.com/savairaameer0-dot/portfolio-backend)
 - [ ] Connect a database
-- [ ] Add dark/light mode toggle
