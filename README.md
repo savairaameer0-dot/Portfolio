@@ -25,3 +25,4 @@ A personal portfolio site I'm building and updating every day to practice web de
 - [x] Day 3: Working contact form (Formspree)
 - [ ] Add a small backend (Node.js/Express)
 - [ ] Connect a database
+- [ ] Add dark/light mode toggle
