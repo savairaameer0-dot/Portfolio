@@ -25,4 +25,4 @@ A personal portfolio site I'm building and updating every day to practice web de
 - [x] Day 3: Working contact form (Formspree)
 - [x] Day 4: Small backend (Node.js/Express) — see [portfolio-backend](https://github.com/savairaameer0-dot/portfolio-backend)
 - [x] Connect a database
-- [ ] - [ ] Add unit tests for the backend
+
