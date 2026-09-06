@@ -497,3 +497,43 @@ section {
 @media (max-width: 640px) {
   .chat-panel { width: 88vw; height: 60vh; }
 }
+/* Auto-sync additions */
+.log-repo {
+  color: var(--teal);
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+}
+
+.log-content p a {
+  font-size: 0.85rem;
+}
+
+.log-empty {
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+}
+
+.project-link {
+  display: block;
+  margin-top: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--amber);
+}
+
+.project-card {
+  transition: border-color 0.2s, transform 0.2s;
+}
+.project-card:hover {
+  border-color: var(--amber);
+  transform: translateY(-3px);
+}
+
+.section-label::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+  margin-left: 12px;
+}
