@@ -111,13 +111,13 @@ function renderDaysCounter(commits) {
 
 async function start() {
   renderStack();
-  renderProjects();
   renderLinks();
   const commits = await loadDevlog();
   renderLog(commits);
   renderDaysCounter(commits);
+  const projectList = await loadProjects();
+  renderProjects(projectList);
 }
-
 start();
 
 // chat widget — just keyword matching against the data above,
