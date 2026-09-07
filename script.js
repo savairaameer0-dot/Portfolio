@@ -10,18 +10,31 @@ const stack = [
   // add more as i pick them up
 ];
 
-const projects = [
-  {
-    name: "Portfolio Assistant (chatbox)",
-    description: "rule-based chat widget in the corner that answers questions about my skills, projects, and how to reach me.",
-    tags: ["JavaScript", "DOM"]
-  },
-  {
-    name: "This portfolio",
-    description: "the site you're looking at right now, built and updated as i go.",
-    tags: ["HTML", "CSS", "JS"]
+async function getProjectInfo(repo) {
+  const res = await fetch(`https://api.github.com/repos/${GH_USERNAME}/${repo}`);
+  if (!res.ok) {
+    console.log("couldn't grab info for", repo);
+    return null;
   }
-];
+  const data = await res.json();
+  return {
+    name: data.name.replace(/^-/, ""),
+    description: data.description || "no description yet",
+    language: data.language,
+    url: data.html_url,
+    updated: data.pushed_at
+  };
+}
+
+async function loadProjects() {
+  const results = [];
+  for (const repo of GH_REPOS) {
+    const info = await getProjectInfo(repo);
+    if (info) results.push(info);
+  }
+  results.sort((a, b) => new Date(b.updated) - new Date(a.updated));
+  return results;
+}
 
 const links = {
   github: "https://github.com/savairaameer0-dot",
