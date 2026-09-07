@@ -1,47 +1,26 @@
-// =========================================================
-// EDIT THIS FILE EVERY DAY. Add one new entry to `devlog`
-// at the TOP of the array, commit, and push. That's it —
-// that's your daily contribution.
-// =========================================================
+// pulling devlog straight from my github commits now instead of
+// typing it out every day. no auth needed since the repos are public,
+// github's rest api just works for this.
 
-const devlog = [
-  {
-    day: "Day 3",
-    title: "Added a working contact form",
-    detail: "Wired up the contact form using Formspree so visitors can message me directly, with real success/error feedback instead of a page reload."
-  },
-  {
-    day: "Day 2",
-    title: "Built a portfolio assistant chatbox",
-    detail: "Added a rule-based chat widget that answers visitor questions about my skills, projects, and how to get in touch — all client-side, no backend yet."
-  },
-  {
-    day: "Day 1",
-    title: "Started the build-in-public portfolio",
-    detail: "Set up the site structure, terminal-style hero, and devlog section. Tomorrow: fill in real skills and first project."
-  }
-  // Add new entries above this line, newest first, e.g.:
-  // { day: "Day 3", title: "...", detail: "..." },
-];
+const GH_USERNAME = "savairaameer0-dot";
+const GH_REPOS = ["Portfolio", "-Ai-interior-design-assistant", "Expense-Tracker", "portfolio-backend"];
 
 const stack = [
   "HTML", "CSS", "JavaScript",
-  // add more as you learn them, e.g. "React", "Node.js", "Express", "MongoDB", "Git"
+  // add more as i pick them up
 ];
 
 const projects = [
   {
     name: "Portfolio Assistant (chatbox)",
-    description: "A rule-based chat widget (bottom-right corner) that answers questions about my skills, projects, and how to reach me.",
+    description: "rule-based chat widget in the corner that answers questions about my skills, projects, and how to reach me.",
     tags: ["JavaScript", "DOM"]
   },
   {
     name: "This portfolio",
-    description: "The site you're looking at right now — built and updated daily.",
+    description: "the site you're looking at right now, built and updated as i go.",
     tags: ["HTML", "CSS", "JS"]
   }
-  // add real projects here as you build them:
-  // { name: "Project Name", description: "What it does.", tags: ["Tech1", "Tech2"] }
 ];
 
 const links = {
@@ -49,18 +28,44 @@ const links = {
   email: "mailto:savairaameer0@gmail.com"
 };
 
-// =========================================================
-// Rendering logic below — no need to touch this part
-// =========================================================
+function formatDate(iso) {
+  const d = new Date(iso);
+  return d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+}
 
-function renderLog() {
+async function getCommitsFor(repo) {
+  const res = await fetch(`https://api.github.com/repos/${GH_USERNAME}/${repo}/commits?per_page=10`);
+  if (!res.ok) {
+    console.log("couldn't grab commits for", repo);
+    return [];
+  }
+  const data = await res.json();
+  return data.map(c => ({
+    repo: repo,
+    message: c.commit.message.split("\n")[0],
+    date: c.commit.author.date,
+    url: c.html_url
+  }));
+}
+
+async function loadDevlog() {
+  let allCommits = [];
+  for (const repo of GH_REPOS) {
+    const commits = await getCommitsFor(repo);
+    allCommits = allCommits.concat(commits);
+  }
+  allCommits.sort((a, b) => new Date(b.date) - new Date(a.date));
+  return allCommits;
+}
+
+function renderLog(commits) {
   const list = document.getElementById("log-list");
-  list.innerHTML = devlog.map(entry => `
+  list.innerHTML = commits.slice(0, 15).map(entry => `
     <div class="log-entry">
-      <div class="log-day">${entry.day}</div>
+      <div class="log-day">${formatDate(entry.date)}</div>
       <div class="log-content">
-        <h3>${entry.title}</h3>
-        <p>${entry.detail}</p>
+        <h3>${entry.message}</h3>
+        <p>${entry.repo.replace(/^-/, "")} — <a href="${entry.url}" target="_blank">view commit</a></p>
       </div>
     </div>
   `).join("");
@@ -87,25 +92,23 @@ function renderLinks() {
   document.getElementById("link-email").href = links.email;
 }
 
-function renderDaysCounter() {
-  document.getElementById("days-counter").textContent = `${devlog.length} day(s) logged so far.`;
+function renderDaysCounter(commits) {
+  document.getElementById("days-counter").textContent = `${commits.length} commit(s) logged so far.`;
 }
 
-renderLog();
-renderStack();
-renderProjects();
-renderLinks();
-renderDaysCounter();
+async function start() {
+  renderStack();
+  renderProjects();
+  renderLinks();
+  const commits = await loadDevlog();
+  renderLog(commits);
+  renderDaysCounter(commits);
+}
 
-// =========================================================
-// Portfolio Assistant — a rule-based "AI-style" chat widget.
-// It answers using the data already defined above (stack,
-// projects, devlog, links) so it stays in sync automatically
-// as you add more entries. No API key needed, runs fully
-// in the browser. Swap in a real LLM API later once you
-// add a backend.
-// =========================================================
+start();
 
+// chat widget — just keyword matching against the data above,
+// no model or api call behind it
 const chatToggle = document.getElementById("chat-toggle");
 const chatPanel = document.getElementById("chat-panel");
 const chatClose = document.getElementById("chat-close");
@@ -141,28 +144,28 @@ function getBotReply(userText) {
   const text = userText.toLowerCase();
 
   if (/(hi|hello|hey)\b/.test(text)) {
-    return "Hey! Ask me about my skills, projects, or how to get in touch.";
+    return "hey — ask me about my skills, projects, or how to get in touch.";
   }
   if (text.includes("skill") || text.includes("stack") || text.includes("tech")) {
-    return `My current stack: ${stack.join(", ")}.`;
+    return `right now i'm working with ${stack.join(", ")}.`;
   }
   if (text.includes("project")) {
     const names = projects.map(p => p.name).join(", ");
-    return `I've built: ${names}. Check the Projects section above for details.`;
+    return `so far i've built: ${names}. scroll up to the projects section for details.`;
   }
   if (text.includes("contact") || text.includes("email") || text.includes("reach")) {
-    return "You can reach out via the Contact section above — GitHub and email are both there.";
+    return "easiest way to reach me is the contact section above — github and email are both linked there.";
   }
   if (text.includes("hire") || text.includes("job") || text.includes("opportun")) {
-    return "I'm actively open to opportunities! Best way in is through the Contact section — GitHub or email.";
+    return "i'm open to opportunities right now — best way in is through the contact section.";
   }
   if (text.includes("devlog") || text.includes("progress") || text.includes("day")) {
-    return `I'm on ${devlog.length} day(s) of building in public so far — check the Devlog section for the full log.`;
+    return "devlog pulls straight from my github commits now — check the section above for the full log.";
   }
   if (text.includes("thank")) {
-    return "You're welcome! Anything else you'd like to know?";
+    return "no problem! anything else you want to know?";
   }
-  return "I'm a simple rule-based assistant for now — try asking about my skills, projects, devlog, or how to contact me.";
+  return "i'm just a simple keyword bot for now — try asking about skills, projects, the devlog, or how to contact me.";
 }
 
 function handleUserMessage(text) {
@@ -178,7 +181,7 @@ chatToggle.addEventListener("click", () => {
   chatPanel.hidden = !chatPanel.hidden;
   if (!chatOpened && !chatPanel.hidden) {
     chatOpened = true;
-    addMessage("Hi! I'm this portfolio's assistant. Ask me about skills, projects, or how to get in touch.", "bot");
+    addMessage("hey, i'm the assistant for this site. ask me about skills, projects, or how to get in touch.", "bot");
   }
 });
 
@@ -194,12 +197,7 @@ chatForm.addEventListener("submit", (e) => {
   handleUserMessage(text);
 });
 
-// =========================================================
-// Contact form — sends via Formspree (no backend needed).
-// Replace the form's `action` URL in index.html with your
-// own Formspree endpoint: https://formspree.io/f/YOUR_FORM_ID
-// =========================================================
-
+// contact form posts straight to formspree, no backend needed for this
 const contactForm = document.getElementById("contact-form");
 const formStatus = document.getElementById("form-status");
 
