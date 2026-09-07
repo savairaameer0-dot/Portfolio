@@ -537,3 +537,10 @@ section {
   background: var(--border);
   margin-left: 12px;
 }
+.project-link {
+  display: block;
+  margin-top: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--amber);
+}
