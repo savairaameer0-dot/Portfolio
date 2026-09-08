@@ -10,6 +10,18 @@ const stack = [
   // add more as i pick them up
 ];
 
+const links = {
+  github: "https://github.com/savairaameer0-dot",
+  email: "mailto:savairaameer0@gmail.com"
+};
+
+let liveProjects = [];
+
+function formatDate(iso) {
+  const d = new Date(iso);
+  return d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+}
+
 async function getProjectInfo(repo) {
   const res = await fetch(`https://api.github.com/repos/${GH_USERNAME}/${repo}`);
   if (!res.ok) {
@@ -34,16 +46,6 @@ async function loadProjects() {
   }
   results.sort((a, b) => new Date(b.updated) - new Date(a.updated));
   return results;
-}
-
-const links = {
-  github: "https://github.com/savairaameer0-dot",
-  email: "mailto:savairaameer0@gmail.com"
-};
-
-function formatDate(iso) {
-  const d = new Date(iso);
-  return d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
 }
 
 async function getCommitsFor(repo) {
@@ -113,12 +115,16 @@ function renderDaysCounter(commits) {
 async function start() {
   renderStack();
   renderLinks();
+
   const commits = await loadDevlog();
   renderLog(commits);
   renderDaysCounter(commits);
+
   const projectList = await loadProjects();
   renderProjects(projectList);
+  liveProjects = projectList;
 }
+
 start();
 
 // chat widget — just keyword matching against the data above,
@@ -164,7 +170,8 @@ function getBotReply(userText) {
     return `right now i'm working with ${stack.join(", ")}.`;
   }
   if (text.includes("project")) {
-    const names = projects.map(p => p.name).join(", ");
+    if (!liveProjects.length) return "check the projects section above — it pulls live from my github.";
+    const names = liveProjects.map(p => p.name).join(", ");
     return `so far i've built: ${names}. scroll up to the projects section for details.`;
   }
   if (text.includes("contact") || text.includes("email") || text.includes("reach")) {
