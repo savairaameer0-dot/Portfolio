@@ -89,13 +89,14 @@ function renderStack() {
   grid.innerHTML = stack.map(item => `<div class="stack-item">${item}</div>`).join("");
 }
 
-function renderProjects() {
+function renderProjects(projectList) {
   const grid = document.getElementById("projects-grid");
-  grid.innerHTML = projects.map(p => `
+  grid.innerHTML = projectList.map(p => `
     <div class="project-card">
       <h3>${p.name}</h3>
       <p>${p.description}</p>
-      ${p.tags.map(t => `<span class="tag">${t}</span>`).join("")}
+      ${p.language ? `<span class="tag">${p.language}</span>` : ""}
+      <a class="project-link" href="${p.url}" target="_blank">view on github →</a>
     </div>
   `).join("");
 }
